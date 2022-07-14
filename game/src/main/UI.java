@@ -143,6 +143,10 @@ public class UI {
 		if(gp.gameState == gp.gameFinish) {
 			drawGameFinish();
 		}
+		// SET PLAYER
+		if(gp.gameState == gp.setPlayer) {
+			drawSetPlayer();
+		}
 		
 	}
 	
@@ -512,6 +516,115 @@ public class UI {
 		textY += lineHeight + 10;
 
 		g2.drawImage(gp.player.currentShield.down1, tailX - gp.tileSize, textY, null);
+	}
+	
+	public void drawSetPlayer() {
+		// SUB WINDOW
+		int frameX = gp.tileSize*6;
+		int frameY = gp.tileSize;
+		int frameWidth = gp.tileSize * 8;
+		int frameHeight = gp.tileSize*10;
+		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+		
+		int textX;
+		int textY;
+		g2.setColor(Color.white);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		// TITLE
+		String text = "SETTING";
+		textX = getXforCenteredText(text);
+		textY = frameY + gp.tileSize;
+		g2.drawString(text, textX, textY);
+		textX = frameX + 20;
+		textY += 2* gp.tileSize;
+		final int lineHeight = 36;
+
+		// NAMES
+		g2.drawString("Speed", textX, textY);
+		if(commandNum == 0) {
+			g2.drawString("<<<x>>>", textX+gp.tileSize*3-20, textY);
+			if(gp.keyH.rightPressed == true) {
+				gp.player.speed++;
+				gp.keyH.rightPressed = false;
+			}
+			if(gp.keyH.leftPressed == true) {
+				gp.player.speed--;
+				gp.keyH.leftPressed = false;
+			}
+		}
+		textY += lineHeight;
+		g2.drawString("Attack", textX, textY);
+		if(commandNum == 1) {
+			g2.drawString("<<<x>>>", textX+gp.tileSize*3-20, textY);
+			if(gp.keyH.rightPressed == true) {
+				gp.player.strength++;
+				gp.keyH.rightPressed = false;
+			}
+			if(gp.keyH.leftPressed == true) {
+				gp.player.strength--;
+				gp.keyH.leftPressed = false;
+			}
+			gp.player.attack = gp.player.getAttack();
+		}
+		textY += lineHeight;
+		g2.drawString("Defense", textX, textY);
+		if(commandNum == 2) {
+			g2.drawString("<<<x>>>", textX+gp.tileSize*3-20, textY);
+			if(gp.keyH.rightPressed == true) {
+				gp.player.dexterity++;
+				gp.keyH.rightPressed = false;
+			}
+			if(gp.keyH.leftPressed == true) {
+				gp.player.dexterity--;
+				gp.keyH.leftPressed = false;
+			}
+			gp.player.defense = gp.player.getDefense();
+		}
+		textY += lineHeight;
+		g2.drawString("Coin", textX, textY);
+		if(commandNum == 3) {
+			g2.drawString("<<<x>>>", textX+gp.tileSize*3-20, textY);
+			if(gp.keyH.rightPressed == true) {
+				gp.player.coin++;
+				gp.keyH.rightPressed = false;
+			}
+			if(gp.keyH.leftPressed == true) {
+				gp.player.coin--;
+				gp.keyH.leftPressed = false;
+			}
+		}
+		textY += lineHeight;
+		
+		
+		
+		// VALUES
+		int tailX = (frameX + frameWidth) - 30;
+						// Reset TextY
+		textY = frameY + 3*gp.tileSize;
+			String value;
+						
+			value  = String.valueOf(gp.player.speed);
+			textX = getXforAlignToRightText(value, tailX);
+			g2.drawString("<< "+ value+" >>", textX-2*gp.tileSize, textY);
+			textY += lineHeight;
+			
+			value  = String.valueOf(gp.player.getAttack());
+			textX = getXforAlignToRightText(value, tailX);
+			g2.drawString("<< "+ value+" >>", textX-2*gp.tileSize, textY);
+			textY += lineHeight;
+			
+			value  = String.valueOf(gp.player.getDefense());
+			textX = getXforAlignToRightText(value, tailX);
+			g2.drawString("<< "+ value+" >>", textX-2*gp.tileSize, textY);
+			textY += lineHeight;
+			
+			value  = String.valueOf(gp.player.coin);
+			textX = getXforAlignToRightText(value, tailX);
+			g2.drawString("<< "+ value+" >>", textX-2*gp.tileSize, textY);
+			textY += lineHeight;
+			
+			
+			
 	}
 	
 	public void drawInventory(Entity entity, boolean cursor) {
