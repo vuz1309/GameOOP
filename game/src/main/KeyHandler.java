@@ -70,6 +70,9 @@ public class KeyHandler implements KeyListener{
     else if(gp.gameState == gp.tradeState) {
     	tradeState(code);
     }
+    else if(gp.gameState == gp.setPlayer) {
+    	setPlayer(code);
+    }
  
     }
     
@@ -201,7 +204,9 @@ public class KeyHandler implements KeyListener{
     }
     public void playState(int code) {
 
-		
+		if(code == KeyEvent.VK_ALT) {
+			gp.gameState = gp.setPlayer;
+		}
 	    
         if(code == KeyEvent.VK_W ){
             upPressed = true;
@@ -291,6 +296,32 @@ public class KeyHandler implements KeyListener{
         playerInventory(code);
 
     }
+    
+    public void setPlayer(int code) {
+    	if(code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ALT) {
+    		gp.gameState = gp.playState;
+    		gp.ui.commandNum=0;
+    	}
+        if(code == KeyEvent.VK_W ){
+            gp.ui.commandNum --;
+            if(gp.ui.commandNum < 0) {
+            	gp.ui.commandNum = 3;
+            }
+        }
+        if(code == KeyEvent.VK_S ){
+            gp.ui.commandNum ++ ;
+            if(gp.ui.commandNum > 3) {
+            	gp.ui.commandNum = 0;
+            }
+        }
+        if(code == KeyEvent.VK_D ){
+            rightPressed = true;
+        }
+        if(code == KeyEvent.VK_A ){
+         leftPressed = true;
+        }
+    }
+    
     
     public void optionsState(int code) {
     	
