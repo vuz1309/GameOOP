@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import entity.Entity;
+import entity.NPC_Merchant;
 import object.OBJ_Coin_Bronze;
 import object.OBJ_Heart;
 import object.OBJ_ManaCrystal;
@@ -236,7 +237,7 @@ public class UI {
 		int width = 5*gp.tileSize;
 		int height = 3*gp.tileSize;
 			
-		drawSubWindow(x, y, width, height);
+		drawSubWindow(x, y, width, height, new Color(139,69,19, 200));
 		
 		
 	}
@@ -371,7 +372,8 @@ public class UI {
 		
 		gp.tileM.draw2(g2);
 		g2.drawString(text, x, y);
-		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+		drawSubWindow(frameX, frameY, frameWidth, frameHeight, new Color(255, 255, 255, 60));
+		g2.setColor(Color.black);
 		g2.drawString("You are standing on @", textX, textY);
 		textY += lineHeight;
 		
@@ -394,8 +396,25 @@ public class UI {
 		int width = gp.screenWidth - (gp.tileSize * 6);
 		int height = gp.tileSize * 4;
 		
-		drawSubWindow(x, y, width, height);
-		
+		drawSubWindow(x, y, width, height, new Color(0,0,0,100));
+		int i = gp.cChecker.checkEntity(gp.player, gp.npc);
+		if(i!=999 ) {
+		if(gp.keyH.enterPressed == true && (gp.npc[gp.currentMap][i] instanceof NPC_Merchant) == false) {
+
+			gp.player.keyH.enterPressed = true;
+			
+			if(i!=999 ) {
+				int j = gp.npc[gp.currentMap][i].dialogueIndex;
+				gp.gameState = gp.playState;
+				if(gp.npc[gp.currentMap][i].dialogues[Entity.NVcounter][++j] == null) {
+//					gp.npc[gp.currentMap][i].dialogueIndex=0;
+						
+						gp.player.keyH.enterPressed = false;
+					
+				}
+			}
+			
+		}}
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
 		x += gp.tileSize;
 		y += gp.tileSize;
@@ -416,7 +435,7 @@ public class UI {
 		final int frameY = gp.tileSize;
 		final int frameWidth  = gp.tileSize * 5;
 		final int frameHeight = gp.tileSize * 10;
-		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+		drawSubWindow(frameX, frameY, frameWidth, frameHeight, Color.black);
 		
 		// TEXT
 		g2.setColor(Color.white);
@@ -524,7 +543,7 @@ public class UI {
 		int frameY = gp.tileSize;
 		int frameWidth = gp.tileSize * 8;
 		int frameHeight = gp.tileSize*10;
-		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+		drawSubWindow(frameX, frameY, frameWidth, frameHeight, Color.black);
 		
 		int textX;
 		int textY;
@@ -542,7 +561,7 @@ public class UI {
 		// NAMES
 		g2.drawString("Speed", textX, textY);
 		if(commandNum == 0) {
-			g2.drawString("<<<x>>>", textX+gp.tileSize*3-20, textY);
+			g2.drawString("A<>D", textX+gp.tileSize*3-20, textY);
 			if(gp.keyH.rightPressed == true) {
 				gp.player.speed++;
 				gp.keyH.rightPressed = false;
@@ -555,7 +574,7 @@ public class UI {
 		textY += lineHeight;
 		g2.drawString("Attack", textX, textY);
 		if(commandNum == 1) {
-			g2.drawString("<<<x>>>", textX+gp.tileSize*3-20, textY);
+			g2.drawString("A<>D", textX+gp.tileSize*3-20, textY);
 			if(gp.keyH.rightPressed == true) {
 				gp.player.strength++;
 				gp.keyH.rightPressed = false;
@@ -569,7 +588,7 @@ public class UI {
 		textY += lineHeight;
 		g2.drawString("Defense", textX, textY);
 		if(commandNum == 2) {
-			g2.drawString("<<<x>>>", textX+gp.tileSize*3-20, textY);
+			g2.drawString("A<>D", textX+gp.tileSize*3-20, textY);
 			if(gp.keyH.rightPressed == true) {
 				gp.player.dexterity++;
 				gp.keyH.rightPressed = false;
@@ -583,7 +602,7 @@ public class UI {
 		textY += lineHeight;
 		g2.drawString("Coin", textX, textY);
 		if(commandNum == 3) {
-			g2.drawString("<<<x>>>", textX+gp.tileSize*3-20, textY);
+			g2.drawString("A<>D", textX+gp.tileSize*3-20, textY);
 			if(gp.keyH.rightPressed == true) {
 				gp.player.coin++;
 				gp.keyH.rightPressed = false;
@@ -595,6 +614,32 @@ public class UI {
 		}
 		textY += lineHeight;
 		
+		g2.drawString("Skill", textX, textY);
+		if(commandNum == 4) {
+			g2.drawString("A<>D", textX+gp.tileSize*3-20, textY);
+			if(gp.keyH.rightPressed == true) {
+				gp.player.amount = 0;
+				gp.keyH.rightPressed = false;
+			}
+			if(gp.keyH.leftPressed == true) {
+				gp.player.amount = 2;
+				gp.keyH.leftPressed = false;
+			}
+		}
+		textY += lineHeight;
+		
+		g2.drawString("Collison", textX, textY);
+		if(commandNum == 5) {
+			g2.drawString("A<>D", textX+gp.tileSize*3-20, textY);
+			if(gp.keyH.rightPressed == true) {
+				gp.player.price = 0;
+				gp.keyH.rightPressed = false;
+			}
+			if(gp.keyH.leftPressed == true) {
+				gp.player.price = 1;
+				gp.keyH.leftPressed = false;
+			}
+		}
 		
 		
 		// VALUES
@@ -623,7 +668,28 @@ public class UI {
 			g2.drawString("<< "+ value+" >>", textX-2*gp.tileSize, textY);
 			textY += lineHeight;
 			
+
+			if(gp.player.amount == 0) {
+				value = "Fire Ball";
+			}
+			else {
+				value = "Bat tu";
+			}
+			textX = getXforAlignToRightText(value, tailX);
+			g2.drawString(value, textX-14, textY);
+			textY += lineHeight;
 			
+			
+			if(gp.player.price == 0) {
+				value = "On";
+			}
+			else {
+				value = "Off";
+			}
+			
+			textX = getXforAlignToRightText(value, tailX);
+			g2.drawString("<< "+ value+" >>", textX-2*gp.tileSize, textY);
+			textY += lineHeight;
 			
 	}
 	
@@ -653,7 +719,7 @@ public class UI {
 		}
 		
 		// FRAME
-		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+		drawSubWindow(frameX, frameY, frameWidth, frameHeight, new Color(139,69,19, 200));
 		
 		// SLOT
 		final int slotXstart = frameX + 20;
@@ -731,7 +797,7 @@ public class UI {
 			int dFrameY = frameY + frameHeight;
 			int dFrameWidth = frameWidth;
 			int dFrameHeight = gp.tileSize*3;
-			drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+			drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight, new Color(139,69,19, 200));
 			
 			// DRAW DESCRIPTION TEXT
 			int textX = dFrameX + 20;
@@ -741,7 +807,7 @@ public class UI {
 			
 			if (itemIndex < entity.inventory.size()) {
 				
-				drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+				drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight, new Color(139,69,19, 200));
 				
 				if(entity.inventory.get(itemIndex) != null) {
 					for( String lines : entity.inventory.get(itemIndex).description.split("\n")) {
@@ -796,7 +862,7 @@ public class UI {
 		int y = gp.tileSize * 4;
 		int width = gp.tileSize * 3;
 		int height = (int) (gp.tileSize * 3.5);
-		drawSubWindow(x, y, width, height);
+		drawSubWindow(x, y, width, height, new Color(139,69,19, 200));
 		
 		// DRAW TEXTS
 		x+= gp.tileSize;
@@ -843,15 +909,15 @@ public class UI {
 		int y = gp.tileSize * 9;
 		int width = gp.tileSize * 6;
 		int height = gp.tileSize * 2;
-		drawSubWindow( x, y, width, height);
-		g2.drawString("[ESC] Back", x+24, y+gp.tileSize);
+		drawSubWindow( x, y, width, height, new Color(139,69,19, 200));
+		g2.drawString("[ESC] Back", x+24, y+gp.tileSize );
 		
 		// DRAW PLAYER COIN WINDOW
 		x= gp.tileSize * 12;
 		y = gp.tileSize * 9;
 		width = gp.tileSize * 6;
 		height = gp.tileSize * 2;
-		drawSubWindow( x, y, width, height);
+		drawSubWindow( x, y, width, height, new Color(139,69,19, 200));
 		g2.drawString("Your coin: " + gp.player.coin, x+24, y+gp.tileSize);
 	
 		// DRAW PRICE WINDOW
@@ -862,7 +928,7 @@ public class UI {
 			y = (int)(gp.tileSize *5.5);
 			width = (int)(gp.tileSize * 2.5);
 			height = gp.tileSize;
-			drawSubWindow(x, y, width, height);
+			drawSubWindow(x, y, width, height, new Color(139,69,19, 200));
 			g2.drawImage(coin, x+10, y+8, 32, 32,null);
 			
 			int price = npc.inventory.get(itemIndex).price;
@@ -909,7 +975,7 @@ public class UI {
 		 y = gp.tileSize * 9;
 		 width = gp.tileSize * 6;
 		 height = gp.tileSize * 2;
-		drawSubWindow( x, y, width, height);
+		drawSubWindow( x, y, width, height, new Color(139,69,19, 200));
 		g2.drawString("[ESC] Back", x+24, y+gp.tileSize);
 		
 		// DRAW PLAYER COIN WINDOW
@@ -917,7 +983,7 @@ public class UI {
 		y = gp.tileSize * 9;
 		width = gp.tileSize * 6;
 		height = gp.tileSize * 2;
-		drawSubWindow( x, y, width, height);
+		drawSubWindow( x, y, width, height, new Color(139,69,19, 200));
 		g2.drawString("Your coin: " + gp.player.coin, x+24, y+gp.tileSize);
 	
 		// DRAW PRICE WINDOW
@@ -928,7 +994,7 @@ public class UI {
 			y = (int)(gp.tileSize *5.5);
 			width = (int)(gp.tileSize * 2.5);
 			height = gp.tileSize;
-			drawSubWindow(x, y, width, height);
+			drawSubWindow(x, y, width, height, new Color(139,69,19, 200));
 			g2.drawImage(coin, x+10, y+8, 32, 32,null);
 			
 			int price = gp.player.inventory.get(itemIndex).price/2;
@@ -1013,7 +1079,7 @@ public class UI {
 		int frameY = gp.tileSize;
 		int frameWidth = gp.tileSize * 8;
 		int frameHeight = gp.tileSize*10;
-		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+		drawSubWindow(frameX, frameY, frameWidth, frameHeight, Color.black);
 		
 		switch(subState) {
 		case 0: options_top(frameX, frameY) ; break;
@@ -1303,9 +1369,9 @@ public class UI {
 	
 	}
 	
-	public void drawSubWindow(int x, int y, int width, int height) {
+	public void drawSubWindow(int x, int y, int width, int height, Color color) {
 		
-		Color c = new Color(139,69,19, 200);
+		Color c = color;
 		g2.setColor(c);
 		g2.fillRoundRect(x, y, width, height, 35, 35);
 		
