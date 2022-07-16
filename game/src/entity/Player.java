@@ -170,29 +170,31 @@ public class Player extends Entity{
 
     
     public void getPlayerAttackImage() {
-    	
-    	if(currentWeapon.type == type_sword) {
-    		attackUp1 = setup("/player/sword_up_1", gp.tileSize*5, gp.tileSize*5);
-        	attackUp2 = setup("/player/sword_attack_up_2", gp.tileSize*5, gp.tileSize*5);
-        	attackDown1 = setup("/player/sword_attack_down_2", gp.tileSize*5, gp.tileSize*5);
-        	attackDown2 = setup("/player/sword_danh_2", gp.tileSize*5, gp.tileSize*5);
-        	attackLeft1 = setup("/player/sword_left_1", gp.tileSize*5, gp.tileSize*5);
-        	attackLeft2 = setup("/player/sword_attack_left", gp.tileSize*5, gp.tileSize*5);
-        	attackRight1 = setup("/player/sword_right_1", gp.tileSize*5, gp.tileSize*5);
-        	attackRight2 = setup("/player/sword_attack_right_2", gp.tileSize*5, gp.tileSize*5);
-        	
+    	if(currentWeapon != null) {
+        	if(currentWeapon.type == type_sword) {
+        		attackUp1 = setup("/player/sword_up_1", gp.tileSize*5, gp.tileSize*5);
+            	attackUp2 = setup("/player/sword_attack_up_2", gp.tileSize*5, gp.tileSize*5);
+            	attackDown1 = setup("/player/sword_attack_down_2", gp.tileSize*5, gp.tileSize*5);
+            	attackDown2 = setup("/player/sword_danh_2", gp.tileSize*5, gp.tileSize*5);
+            	attackLeft1 = setup("/player/sword_left_1", gp.tileSize*5, gp.tileSize*5);
+            	attackLeft2 = setup("/player/sword_attack_left", gp.tileSize*5, gp.tileSize*5);
+            	attackRight1 = setup("/player/sword_right_1", gp.tileSize*5, gp.tileSize*5);
+            	attackRight2 = setup("/player/sword_attack_right_2", gp.tileSize*5, gp.tileSize*5);
+            	
 
-    	}
-    	if(currentWeapon.type == type_axe) {
-    		attackUp1 = setup("/player/axe_up1", gp.tileSize*5, gp.tileSize*5);
-        	attackUp2 = setup("/player/axe_attack_up", gp.tileSize*5, gp.tileSize*5);
-        	attackDown1 = setup("/player/axe_down1", gp.tileSize*5, gp.tileSize*5);
-        	attackDown2 = setup("/player/axe_attack_down", gp.tileSize*5, gp.tileSize*5);
-        	attackLeft1 = setup("/player/axe_left1", gp.tileSize*5, gp.tileSize*5);
-        	attackLeft2 = setup("/player/axe_attack_left", gp.tileSize*5, gp.tileSize*5);
-        	attackRight1 = setup("/player/axe_right1", gp.tileSize*5, gp.tileSize*5);
-        	attackRight2 = setup("/player/axe_attack_right", gp.tileSize*5, gp.tileSize*5);
         	}
+        	if(currentWeapon.type == type_axe) {
+        		attackUp1 = setup("/player/axe_up1", gp.tileSize*5, gp.tileSize*5);
+            	attackUp2 = setup("/player/axe_attack_up", gp.tileSize*5, gp.tileSize*5);
+            	attackDown1 = setup("/player/axe_down1", gp.tileSize*5, gp.tileSize*5);
+            	attackDown2 = setup("/player/axe_attack_down", gp.tileSize*5, gp.tileSize*5);
+            	attackLeft1 = setup("/player/axe_left1", gp.tileSize*5, gp.tileSize*5);
+            	attackLeft2 = setup("/player/axe_attack_left", gp.tileSize*5, gp.tileSize*5);
+            	attackRight1 = setup("/player/axe_right1", gp.tileSize*5, gp.tileSize*5);
+            	attackRight2 = setup("/player/axe_attack_right", gp.tileSize*5, gp.tileSize*5);
+            	}
+    	}
+
 
     	
         }
@@ -247,7 +249,9 @@ public class Player extends Entity{
 	        
 	        collisionOn = false;
 	        gp.cChecker.checkTile(this);
-	        
+	        if(invincible == true) {
+	        	type = type_monster_die;
+	        }
 	        // CHECK OBJECT COLLISION
 	        int objIndex = gp.cChecker.checkObject(this, true);
 	        pickUpObject(objIndex);
@@ -266,7 +270,10 @@ public class Player extends Entity{
 	        // CHECK EVENT
 	        gp.eHandler.checkEvent();
 	              
-//	        collisionOn = false;
+	        if(price == 1) {
+		        collisionOn = false;
+	        }
+
     		// IF COLLISION IS FALSE PLAYER CAN MOVE
             if(collisionOn == false && keyH.enterPressed == false) {
             	
@@ -350,6 +357,7 @@ public class Player extends Entity{
     		if(invincibleCounter > 60) {
     			invincible = false;
     			invincibleCounter = 0;
+    			type= type_player;
     		}
     	}
     	if(shotAvailableCounter < 30) {
@@ -497,15 +505,15 @@ public class Player extends Entity{
     }
     
     public void interactNPC(int i) {
-    	if(gp.keyH.enterPressed == true) {
+    	if(keyH.enterPressed == true) {
     		
         	if(i != 999) {
         			attackCanceled = true;
         			gp.gameState = gp.dialogueState;
             		gp.npc[gp.currentMap][i].speak(); 
-            		if(NVcounter >= 2 && gp.npc[gp.currentMap][i] instanceof NPC_OldMan ) {
-            			gp.npc[gp.currentMap][i].speed = 2;
-            			gp.npc[gp.currentMap][i].onPath = true;
+            		if(NVcounter >= 2 && gp.npc[1][i] instanceof NPC_OldMan ) {
+            			gp.npc[1][i].speed = 2;
+            			gp.npc[1][i].onPath = true;
             			gp.tileM.drawPath = true;
             			
             		}
