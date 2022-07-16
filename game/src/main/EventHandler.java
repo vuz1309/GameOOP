@@ -80,7 +80,7 @@ public class EventHandler {
 			else if(hit(1, 28 ,1, "any") == true || hit(1,28,2, "any") == true) {
 				close();
 			}
-			else if(hit(1,18,42, "left") == true) {
+			else if(hit(1,18,42, "any") == true) {
 				telePortInMap(1, 10, 48, gp.dialogueState);
 			}
 			else if(hit(1,5,38, "any") == true) {
