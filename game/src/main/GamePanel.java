@@ -459,5 +459,8 @@ public class GamePanel extends JPanel implements Runnable{
     	se.setFile(i);
     	se.play();
     }
+    public void stopSE() {
+    	se.stop();
+    }
 }
 
