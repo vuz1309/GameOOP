@@ -88,9 +88,9 @@ public class Entity {
     public int defenseValue;
     public String description = "";
     public int useCost=0;
-    public int price;
-    public boolean stackable = false;
-    public int amount = 1;
+    public int price=0;
+    public boolean stackable = false; // (check player get key)
+    public int amount = 1; //  (skill player)
     public int knockBackPower = 0;
     
     // TYPE 
@@ -337,6 +337,7 @@ public class Entity {
 			
 			gp.player.life -= damage;
 			gp.player.invincible = true;
+			
 			
 		}
 		
