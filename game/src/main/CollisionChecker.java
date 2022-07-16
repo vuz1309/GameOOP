@@ -1,6 +1,9 @@
 package main;
 
 import entity.Entity;
+import monster.MON_GreenSlime;
+import monster.MON_OrangeSlime;
+import monster.MON_RedSlime;
 
 public class CollisionChecker {
 	GamePanel gp;
@@ -147,7 +150,12 @@ public class CollisionChecker {
 				}// end switch
 				
 				if(entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
-					if(target[gp.currentMap][i] != entity) {
+					if(target[gp.currentMap][i] != entity && entity.type == entity.type_player) {
+						entity.collisionOn = true;
+						index = i;	
+					}
+					if(target[gp.currentMap][i] != entity && target[gp.currentMap][i] instanceof MON_RedSlime ||
+							target[gp.currentMap][i] instanceof MON_GreenSlime || target[gp.currentMap][i] instanceof MON_OrangeSlime  ) {
 						entity.collisionOn = true;
 						index = i;	
 					}
