@@ -69,11 +69,19 @@ public class NPC_OldMan extends Entity {
     		int goalRow = (gp.player.worldY + gp.player.solidAreaDefaultY)/gp.tileSize;
     		
     		searchPath(goalCol, goalRow);
- 
+    		if(onPath == false) {
+    			damagePlayer(0);
+    			gp.stopSE();
+    			onPath = true;
+    		}
     	}
     	else {
     		actionLockCounter ++;
-        	
+           	if(dialogueIndex == 3 && amount==1) {
+        		amount++;
+        		NVcounter++;
+        		dropItem(new OBJ_Sword_Normal(gp));
+        	}
         	if(actionLockCounter == 120) {
         	   	
             	Random random = new Random();
@@ -93,7 +101,7 @@ public class NPC_OldMan extends Entity {
             	}
             	
             	actionLockCounter = 0;
-            	onPath = true;
+            	
         	}
      
     	} 	
@@ -104,15 +112,16 @@ public class NPC_OldMan extends Entity {
     	// Do this character specific stuff
     	
     	super.speak();
-       	if(dialogueIndex == 3 && amount==1) {
-    		amount++;
-    		NVcounter++;
-    		dropItem(new OBJ_Sword_Normal(gp));
-    	}
        	if(NVcounter == 2 && gp.currentMap == 1) {
        		NVcounter++;
        		
        	}
+       	if(NVcounter == 3 && gp.currentMap == 1) {
+       		damagePlayer(0);
+       		gp.stopSE();
+       	}
+
+       	
     	
     	
     }
