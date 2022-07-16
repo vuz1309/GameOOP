@@ -5,6 +5,8 @@ import java.awt.RenderingHints.Key;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import entity.NPC_Merchant;
+
 
 public class KeyHandler implements KeyListener{
 
@@ -270,13 +272,22 @@ public class KeyHandler implements KeyListener{
     	
     }
     public void dialogueState(int code) {
-
+    	
     	if(code == KeyEvent.VK_ESCAPE) {
             	
             	gp.gameState = gp.playState;
          }
     	if(code == KeyEvent.VK_ENTER) {
-    		gp.gameState = gp.playState;
+    		enterPressed=true;
+    		int i = gp.cChecker.checkEntity(gp.player, gp.npc);
+    		
+    		if(i==999) {
+    			gp.gameState = gp.playState;
+    		}
+    		else if((gp.npc[gp.currentMap][i] instanceof NPC_Merchant) == true) {
+    			gp.gameState = gp.playState;
+    			enterPressed=false;
+    		}
     		
     	}
     	
@@ -305,12 +316,12 @@ public class KeyHandler implements KeyListener{
         if(code == KeyEvent.VK_W ){
             gp.ui.commandNum --;
             if(gp.ui.commandNum < 0) {
-            	gp.ui.commandNum = 3;
+            	gp.ui.commandNum = 5;
             }
         }
         if(code == KeyEvent.VK_S ){
             gp.ui.commandNum ++ ;
-            if(gp.ui.commandNum > 3) {
+            if(gp.ui.commandNum > 5) {
             	gp.ui.commandNum = 0;
             }
         }
