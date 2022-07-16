@@ -81,6 +81,7 @@ public class AssetSetter {
 		i = 0;
 		gp.npc[numMap][i] = new NPC_OldMan(gp);
 		gp.npc[numMap][i].speed = 4;
+		
 		gp.npc[numMap][i].worldX = gp.tileSize*5;
 		gp.npc[numMap][i].worldY = gp.tileSize* 22;
 		i++;
