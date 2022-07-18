@@ -276,7 +276,9 @@ public class GamePanel extends JPanel implements Runnable{
         	    			   }
         	    		   }
     	    		   }
-        	    		   else {
+        	    		   
+    	    		   
+    	    		   else {
             	    		   if(monster[currentMap][i].alive == true && monster[currentMap][i].dying == false) {
             	    			   
             	    			   monster[currentMap][i].update();	   
