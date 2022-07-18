@@ -73,7 +73,7 @@ public class EventHandler {
 				}
 			}
 			
-			else if(hit(1,1,24, "left") == true) {
+			else if(hit(1,1,24, "left") == true || hit(1,1,25, "left") == true ) {
 				
 				teleport(0,47,44);
 			}
