@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+
 import entity.Entity;
 import entity.NPC_Merchant;
 import object.OBJ_Coin_Bronze;
@@ -242,15 +244,22 @@ public class UI {
 		
 	}
 	
-	public void drawTitleScreen() {
+	public void drawTitleScreen(){
 		
 		if(titleScreenState == 0) {
 			g2.setColor(new Color(0, 0, 0));
 			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
-			
+			BufferedImage img = null;
+			try {
+				img = ImageIO.read(getClass().getResourceAsStream("/tile/nen.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			g2.drawImage(img, 0,  0, gp.screenWidth, gp.screenHeight, null);
 			// TITLE NAME
 			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
-			String text = "Blue Boy Adventure";
+			String text = "Game RPG OOP 28";
 			int x = getXforCenteredText(text);
 			int y = gp.tileSize*3;
 			
