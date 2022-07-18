@@ -79,11 +79,13 @@ public class TileManager {
        	setup(36, "magmaSoil 33", true);
        	setup(37, "rock 50", true);
        	setup(38, "skull1 45", true);
-       	setup(39, "skull2 46", true);
+       	setup(39, "skull2 46", false);
        	setup(40, "soil 30", false);
        	setup(41, "soilmagma 34", true);
        	setup(42, "treeonsoil 53", true);
     	setup(43, "brigde", false);
+    	setup(44, "left", true);
+    	setup(45, "right", true);
     }
     
     
